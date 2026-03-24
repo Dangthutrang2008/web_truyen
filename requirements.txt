@@ -1,4 +1,7 @@
-echo "Django==4.2
+cat > requirements.txt << EOF
+Django==4.2
 python-docx
-Pillow" > requirements.txt
-pip install --user -r requirements.txt
+Pillow
+gunicorn
+whitenoise
+EOF
