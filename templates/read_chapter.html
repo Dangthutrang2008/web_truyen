@@ -1,0 +1,184 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    
+    
+    <div class="chapter-nav">
+        <h2>
+            <a href="{% url 'story_detail' story.id %}">🍄 {{ story.title }} 🍋</a>
+        </h2>
+        <h3>
+            Chương {{ chapter.chapter_number }}: {{ chapter.title }}
+        </h3>
+    </div>
+    <div class="chapter-navigation">
+        {% if prev_chapter %}
+            <a href="{% url 'read_chapter' story.id prev_chapter.chapter_number %}" class="nav-btn prev">
+                « Chương trước
+            </a>
+        {% else %}
+            <span class="nav-btn disabled">« Chương trước</span>
+        {% endif %}
+
+        <div class="current-info">
+            <span>Chương {{ chapter.chapter_number }}</span>
+        </div>
+
+        {% if next_chapter %}
+            <a href="{% url 'read_chapter' story.id next_chapter.chapter_number %}" class="nav-btn next">
+                Chương sau »
+            </a>
+        {% else %}
+            <span class="nav-btn disabled">Chương sau »</span>
+        {% endif %}
+    </div>
+    <!-- Nội dung chương -->
+    <div class="chapter-content">
+        {% if chapter.content %}
+            {{ chapter.content|linebreaks|safe }}
+        {% else %}
+            <div class="empty-content">
+                <p>🍄 Chương này vẫn chưa có nội dung...</p>
+                <p style="font-size: 1.1rem; margin-top: 10px;">Hãy chờ admin cập nhật nhé! 🍋</p>
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Điều hướng chương -->
+    <div class="chapter-navigation">
+        {% if prev_chapter %}
+            <a href="{% url 'read_chapter' story.id prev_chapter.chapter_number %}" class="nav-btn prev">
+                « Chương trước
+            </a>
+        {% else %}
+            <span class="nav-btn disabled">« Chương trước</span>
+        {% endif %}
+
+        <div class="current-info">
+            <span>Chương {{ chapter.chapter_number }}</span>
+        </div>
+
+        {% if next_chapter %}
+            <a href="{% url 'read_chapter' story.id next_chapter.chapter_number %}" class="nav-btn next">
+                Chương sau »
+            </a>
+        {% else %}
+            <span class="nav-btn disabled">Chương sau »</span>
+        {% endif %}
+    </div>
+
+    <style>
+        .chapter-nav {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+            background: linear-gradient(135deg, #f3e8ff, #e0f2fe);
+            border-radius: 24px;
+            border: 3px solid #d8b4fe;
+        }
+
+        .chapter-nav h2 {
+            color: #6b4e91;
+            margin-bottom: 8px;
+            font-size: 1.8rem;
+        }
+
+        .chapter-nav h2 a {
+            color: inherit;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .chapter-nav h2 a:hover {
+            color: #c084fc;
+        }
+
+        .chapter-nav h3 {
+            color: #8b6fbf;
+            font-weight: 500;
+        }
+
+        /* Nội dung truyện */
+        .chapter-content {
+            max-width: 800px;
+            margin: 0 auto 50px;
+            padding: 45px 40px;
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 10px 30px rgba(192, 132, 252, 0.12);
+            border: 3px solid #e0bbff;
+            line-height: 1.85;
+            font-size: 1.15rem;
+            color: #4c3d5e;
+        }
+
+        .chapter-content p {
+            margin-bottom: 1.4em;
+        }
+
+        .empty-content {
+            text-align: center;
+            padding: 60px 20px;
+            color: #9f7aea;
+            font-size: 1.3rem;
+        }
+
+        /* Điều hướng chương */
+        .chapter-navigation {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            padding: 14px 28px;
+            background: linear-gradient(90deg, #c084fc, #a855f7);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+            box-shadow: 0 6px 15px rgba(168, 85, 247, 0.3);
+            display: inline-block;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 25px rgba(168, 85, 247, 0.4);
+        }
+
+        .nav-btn.disabled {
+            background: #d1d5db;
+            color: #6b7280;
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+        }
+
+        .current-info {
+            background: #f3e8ff;
+            color: #7e57c2;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-weight: 600;
+            border: 2px solid #d8b4fe;
+            white-space: nowrap;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .chapter-navigation {
+                justify-content: center;
+            }
+            .nav-btn {
+                margin: 8px;
+            }
+        }
+    </style>
+{% endblock %}

@@ -1,0 +1,202 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="story-detail-container">
+        <!-- Phần thông tin truyện -->
+        <div class="story-info">
+            <div class="cover-wrapper">
+                {% if story.cover %}
+                    <img src="{{ story.cover.url }}" alt="{{ story.title }}">
+                {% else %}
+                    <div class="no-cover">
+                        🍄
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="story-text">
+                <h1>{{ story.title }}</h1>
+                <p class="author">
+                    <span>🍋 Tác giả:</span> {{ story.author }}
+                </p>
+                
+                {% if story.description %}
+                    <div class="description">
+                        <strong>Mô tả:</strong>
+                        <p>{{ story.description }}</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Danh sách chương -->
+        <div class="chapters-section">
+            <h2>📑 Danh sách chương 🍄</h2>
+            
+            <ul class="chapter-list">
+                {% for chapter in chapters %}
+                    <li>
+                        <a href="{% url 'read_chapter' story.id chapter.chapter_number %}">
+                            <span class="chapter-number">Chương {{ chapter.chapter_number }}</span>
+                            <span class="chapter-title">: {{ chapter.title }}</span>
+                        </a>
+                    </li>
+                {% empty %}
+                    <li class="empty">
+                        🍋 Hiện tại chưa có chương nào. Hãy chờ cập nhật nhé!
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <style>
+        .story-detail-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .story-info {
+            display: flex;
+            gap: 40px;
+            flex-wrap: wrap;
+            background: linear-gradient(135deg, #f3e8ff, #e0f2fe);
+            padding: 35px;
+            border-radius: 28px;
+            border: 4px solid #d8b4fe;
+            margin-bottom: 50px;
+            box-shadow: 0 12px 30px rgba(192, 132, 252, 0.15);
+        }
+
+        .cover-wrapper {
+            flex-shrink: 0;
+        }
+
+        .cover-wrapper img {
+            max-width: 320px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+            border: 5px solid white;
+            transition: transform 0.4s;
+        }
+
+        .cover-wrapper img:hover {
+            transform: scale(1.05) rotate(2deg);
+        }
+
+        .no-cover {
+            width: 320px;
+            height: 420px;
+            background: linear-gradient(135deg, #e0bbff, #c4a1ff);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 9rem;
+            color: white;
+            border: 5px solid #fff;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        .story-text h1 {
+            color: #6b4e91;
+            margin-bottom: 15px;
+            font-size: 2.2rem;
+        }
+
+        .author {
+            font-size: 1.2rem;
+            color: #8b6fbf;
+            margin-bottom: 20px;
+        }
+
+        .author span {
+            color: #c084fc;
+        }
+
+        .description {
+            background: white;
+            padding: 20px;
+            border-radius: 18px;
+            border: 2px dashed #d8b4fe;
+        }
+
+        .description p {
+            line-height: 1.7;
+            color: #5a3d7a;
+        }
+
+        /* Danh sách chương */
+        .chapters-section {
+            background: white;
+            padding: 35px;
+            border-radius: 24px;
+            box-shadow: 0 10px 30px rgba(192, 132, 252, 0.12);
+            border: 3px solid #e0bbff;
+        }
+
+        .chapters-section h2 {
+            text-align: center;
+            color: #6b4e91;
+            margin-bottom: 30px;
+            font-size: 1.8rem;
+        }
+
+        .chapter-list {
+            list-style: none;
+        }
+
+        .chapter-list li {
+            margin-bottom: 12px;
+        }
+
+        .chapter-list a {
+            display: flex;
+            align-items: center;
+            padding: 18px 24px;
+            background: #f9f0ff;
+            border-radius: 18px;
+            text-decoration: none;
+            color: #5a3d7a;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .chapter-list a:hover {
+            background: #f3e8ff;
+            border-color: #c084fc;
+            transform: translateX(10px);
+            box-shadow: 0 8px 20px rgba(192, 132, 252, 0.2);
+        }
+
+        .chapter-number {
+            font-weight: 700;
+            color: #c084fc;
+            min-width: 110px;
+        }
+
+        .chapter-title {
+            color: #6b4e91;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 50px;
+            color: #9f7aea;
+            font-size: 1.3rem;
+            font-style: italic;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .story-info {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            .cover-wrapper img, .no-cover {
+                max-width: 280px;
+            }
+        }
+    </style>
+{% endblock %}

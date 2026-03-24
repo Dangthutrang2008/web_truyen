@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="lock-page">
+        <div class="lock-card">
+            <!-- Icon lớn -->
+            <div class="lock-icon">
+                🔒
+            </div>
+
+            <h1>Truyện này đang bị khóa 🍄</h1>
+            <p class="subtitle">Nhập mật khẩu đúng để mở khóa và tiếp tục đọc nhé 🍋</p>
+
+            <form method="post" class="password-form">
+                {% csrf_token %}
+
+                <div class="input-group">
+                    <input 
+                        type="password" 
+                        name="password" 
+                        placeholder="🔑 Nhập mật khẩu ở đây..."
+                        required 
+                        autocomplete="off"
+                    >
+                </div>
+
+                <button type="submit" class="unlock-btn">
+                    Mở khóa truyện ✨
+                </button>
+            </form>
+
+            <div class="hint">
+                💡 Mật khẩu thường được để ở phần mô tả hoặc thông báo của truyện
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .lock-page {
+            min-height: 70vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .lock-card {
+            background: white;
+            max-width: 520px;
+            width: 100%;
+            padding: 50px 40px;
+            border-radius: 32px;
+            box-shadow: 0 20px 40px rgba(192, 132, 252, 0.25);
+            border: 5px solid #d8b4fe;
+            text-align: center;
+        }
+
+        .lock-icon {
+            font-size: 6rem;
+            margin-bottom: 20px;
+            animation: shake 2s infinite;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: rotate(-8deg); }
+            50% { transform: rotate(8deg); }
+        }
+
+        .lock-card h1 {
+            color: #6b4e91;
+            font-size: 2rem;
+            margin-bottom: 12px;
+        }
+
+        .subtitle {
+            color: #8b6fbf;
+            font-size: 1.15rem;
+            margin-bottom: 40px;
+            line-height: 1.5;
+        }
+
+        .password-form {
+            margin-bottom: 30px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 18px 24px;
+            font-size: 1.1rem;
+            border: 3px solid #e0bbff;
+            border-radius: 50px;
+            background: #fdf4ff;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #c084fc;
+            box-shadow: 0 0 0 5px rgba(192, 132, 252, 0.2);
+        }
+
+        .unlock-btn {
+            width: 100%;
+            padding: 16px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            background: linear-gradient(90deg, #c084fc, #a855f7);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(168, 85, 247, 0.35);
+            transition: all 0.4s;
+        }
+
+        .unlock-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(168, 85, 247, 0.45);
+        }
+
+        .hint {
+            font-size: 0.95rem;
+            color: #9f7aea;
+            background: #f3e8ff;
+            padding: 14px 20px;
+            border-radius: 18px;
+            border: 2px dashed #d8b4fe;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .lock-card {
+                padding: 40px 25px;
+            }
+            .lock-icon {
+                font-size: 5rem;
+            }
+        }
+    </style>
+{% endblock %}

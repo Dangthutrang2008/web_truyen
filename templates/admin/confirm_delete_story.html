@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}Xóa truyện{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-danger text-white">
+                    <h3 class="mb-0">⚠️ Xác nhận xóa truyện</h3>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-warning">
+                        <strong>Bạn có chắc chắn muốn xóa truyện này?</strong>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <p><strong>Tên truyện:</strong> {{ story.title }}</p>
+                        <p><strong>Tác giả:</strong> {{ story.author }}</p>
+                        <p><strong>Số chương:</strong> {{ chapter_count }}</p>
+                        <p><strong>Ngày tạo:</strong> {{ story.created_at|date:"d/m/Y H:i" }}</p>
+                    </div>
+                    
+                    <div class="alert alert-danger">
+                        <strong>⚠️ Lưu ý:</strong> Hành động này sẽ xóa vĩnh viễn truyện và tất cả {{ chapter_count }} chương liên quan!
+                    </div>
+                    
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-danger">🗑️ Xác nhận xóa</button>
+                            <a href="{% url 'admin_dashboard' %}" class="btn btn-secondary">❌ Hủy bỏ</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

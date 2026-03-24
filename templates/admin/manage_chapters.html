@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}Quản lý chương - {{ story.title }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Quản lý chương: {{ story.title }}</h1>
+        <div>
+            <a href="{% url 'admin_add_chapter' story.id %}" class="btn btn-success">+ Thêm chương mới</a>
+            <a href="{% url 'admin_bulk_delete_chapters' story.id %}" class="btn btn-danger">🗑️ Xóa nhiều chương</a>
+            <a href="{% url 'admin_dashboard' %}" class="btn btn-secondary">← Quay lại</a>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <table class="table table-bordered table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Chương</th>
+                        <th>Tên chương</th>
+                        <th>Ngày đăng</th>
+                        <th>Nội dung (Preview)</th>
+                        <th>Quản lý</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for chapter in chapters %}
+                    <tr>
+                        <td>{{ chapter.id }}</td>
+                        <td class="text-center">{{ chapter.chapter_number }}</td>
+                        <td>{{ chapter.title }}</td>
+                        <td>{{ chapter.created_at|date:"d-m-Y H:i" }}</td>
+                        <td>
+                            {% if chapter.content %}
+                                {{ chapter.content|truncatewords:30 }}
+                            {% else %}
+                                <span class="text-danger">⚠️ Chưa có nội dung</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="{% url 'admin_edit_chapter' story.id chapter.id %}" class="btn btn-sm btn-warning">✏️ Sửa</a>
+                            <a href="{% url 'admin_delete_chapter' story.id chapter.id %}" class="btn btn-sm btn-danger" onclick="return confirm('Xóa chương {{ chapter.chapter_number }}?')">🗑️ Xóa</a>
+                            <a href="{% url 'read_chapter' story.id chapter.chapter_number %}" target="_blank" class="btn btn-sm btn-info">👁️ Xem</a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="text-center">Chưa có chương nào</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

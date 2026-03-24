@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}Thêm chương mới - {{ story.title }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Thêm chương mới cho "{{ story.title }}"</h1>
+        <a href="{% url 'admin_manage_chapters' story.id %}" class="btn btn-secondary">← Quay lại</a>
+    </div>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <div class="card">
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                
+                <div class="mb-3">
+                    <label for="chapter_number" class="form-label">Số chương <span class="text-danger">*</span></label>
+                    <input type="number" name="chapter_number" id="chapter_number" class="form-control" value="{{ next_number }}" required>
+                    <small class="text-muted">Số chương tiếp theo: {{ next_number }}</small>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="title" class="form-label">Tên chương <span class="text-danger">*</span></label>
+                    <input type="text" name="title" id="title" class="form-control" required>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="content" class="form-label">Nội dung</label>
+                    <textarea name="content" id="content" class="form-control" rows="15" style="font-family: monospace;"></textarea>
+                    <small class="text-muted">Bạn có thể viết nội dung hoặc copy từ file</small>
+                </div>
+                
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-primary">💾 Lưu chương</button>
+                    <a href="{% url 'admin_manage_chapters' story.id %}" class="btn btn-secondary">❌ Hủy</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
