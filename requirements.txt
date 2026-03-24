@@ -1,0 +1,4 @@
+echo "Django==4.2
+python-docx
+Pillow" > requirements.txt
+pip install --user -r requirements.txt
